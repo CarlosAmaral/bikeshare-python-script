@@ -6,6 +6,25 @@ CITY_DATA = {'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv'}
 
+MONTHS = {
+    'january': 1,
+    'february': 2,
+    'march': 3,
+    'april': 4,
+    'may': 5,
+    'june': 6
+}
+
+DAYS = {
+    'monday': 0,
+    'tuesday': 1,
+    'wednesday': 2,
+    'thursday': 3,
+    'friday': 4,
+    'saturday': 5,
+    'sunday': 6
+}
+
 
 def get_filters():
     """
@@ -86,8 +105,16 @@ def load_data(city, month=None, day=None):
     """
 
     df = pd.read_csv(CITY_DATA[city])
-    df['month'] = pd.to_datetime(df['Start Time']).dt.month
-    kewl = df[df['month'] == 4]
+
+    """
+    Return Data Frame if no filters applied
+    """
+    if month == None and day == None:
+        return df
+    
+    if month != None:
+        df['month'] = pd.to_datetime(df['Start Time']).dt.month
+    df = df[df['month'] == 4]
     return df
 
 
