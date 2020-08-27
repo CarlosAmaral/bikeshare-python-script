@@ -2,9 +2,10 @@ import time
 import pandas as pd
 import numpy as np
 
-CITY_DATA = { 'chicago': 'chicago.csv',
+CITY_DATA = {'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+              'washington': 'washington.csv'}
+
 
 def get_filters():
     """
@@ -17,19 +18,62 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    city = input_validator("Please choose one of the followings cities: Chicago, New York City, Washington \ncity: ", "city")
+    filter_choice = input_validator("Please choose a time filter: month, day or none for no time filter \nfilter: ", "filter")
 
-
-    # get user input for month (all, january, february, ... , june)
-
-
-    # get user input for day of week (all, monday, tuesday, ... sunday)
-
+    if filter_choice == "month":
+        # get user input for month (january, february, ... , june)  
+        month = input_validator("Please choose a month: January, February, March, April, May, June \nmonth: ", "month")
+        day = None
+    elif filter_choice == "day":
+        # get user input for day of week (all, monday, tuesday, ... sunday)
+        day = input_validator("Please choose a day: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday \nday: ", "day")
+        month = None
+    else:
+        month = None
+        day = None
 
     print('-'*40)
     return city, month, day
 
 
-def load_data(city, month, day):
+def input_validator(input_str, type):
+    while True:
+        input_value = input(input_str)
+        try:
+            if type == "month":
+                result = validate_month(input_value)
+            if type == "day":
+                result = validate_day(input_value)
+            if type == "filter":
+                result = validate_filter_choice(input_value)
+            if type == "city":
+                result = validate_city(input_value)
+            if not result:
+                raise Exception("Please type one of the values above")
+        except Exception as error:
+            print(error)
+            continue
+        break
+    return input_value
+
+def validate_city(city):
+    cities = ['chicago', 'new york city', 'washington']
+    return True if city.lower() in cities else False
+
+def validate_filter_choice(filter_choice):
+    filter_options = ['month', 'day', 'none']
+    return True if filter_choice.lower() in filter_options else False
+
+def validate_month(month):
+    month_options = ['january', 'february', 'march', 'april', 'may', 'june']
+    return True if month.lower() in month_options else False
+
+def validate_day(day):
+    day_options = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    return True if day.lower() in day_options else False
+
+def load_data(city, month=None, day=None):
     """
     Loads data for the specified city and filters by month and day if applicable.
 
@@ -41,7 +85,9 @@ def load_data(city, month, day):
         df - Pandas DataFrame containing city data filtered by month and day
     """
 
-
+    df = pd.read_csv(CITY_DATA[city])
+    df['month'] = pd.to_datetime(df['Start Time']).dt.month
+    kewl = df[df['month'] == 4]
     return df
 
 
@@ -117,6 +163,8 @@ def user_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def str_to_bold(str):
+    return "\033[1m{}\033[0m".format(str)
 
 def main():
     while True:
