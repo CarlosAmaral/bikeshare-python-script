@@ -37,16 +37,16 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington)
-    city = input_validator("Please choose one of the followings cities: Chicago, New York City, Washington \ncity: ", "city")
+    city = input_validator("Please choose one of the followings cities: Chicago, New York City, Washington \ncity: ", "city").lower()
     filter_choice = input_validator("Please choose a time filter: month, day or none for no time filter \nfilter: ", "filter")
 
     if filter_choice == "month":
         # get user input for month (january, february, ... , june)  
-        month = input_validator("Please choose a month: January, February, March, April, May, June \nmonth: ", "month")
+        month = input_validator("Please choose a month: January, February, March, April, May, June \nmonth: ", "month").lower()
         day = None
     elif filter_choice == "day":
         # get user input for day of week (monday, tuesday, ... sunday)
-        day = input_validator("Please choose a day: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday \nday: ", "day")
+        day = input_validator("Please choose a day: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday \nday: ", "day").lower()
         month = None
     else:
         month = None
