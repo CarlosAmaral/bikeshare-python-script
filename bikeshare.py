@@ -1,6 +1,5 @@
 import time
 import pandas as pd
-import numpy as np
 from datetime import timedelta
 
 CITY_DATA = {'chicago': 'chicago.csv',
@@ -37,7 +36,7 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!')
-    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    # get user input for city (chicago, new york city, washington)
     city = input_validator("Please choose one of the followings cities: Chicago, New York City, Washington \ncity: ", "city")
     filter_choice = input_validator("Please choose a time filter: month, day or none for no time filter \nfilter: ", "filter")
 
@@ -46,7 +45,7 @@ def get_filters():
         month = input_validator("Please choose a month: January, February, March, April, May, June \nmonth: ", "month")
         day = None
     elif filter_choice == "day":
-        # get user input for day of week (all, monday, tuesday, ... sunday)
+        # get user input for day of week (monday, tuesday, ... sunday)
         day = input_validator("Please choose a day: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or Sunday \nday: ", "day")
         month = None
     else:
