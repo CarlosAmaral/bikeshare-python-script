@@ -57,6 +57,12 @@ def get_filters():
 
 
 def input_validator(input_str, type):
+    """
+    Validates user input based on the type of input (e.g. month, day, filter)
+
+    Returns:
+        (input_value) - user input value 
+    """
     while True:
         input_value = input(input_str)
         try:
@@ -79,20 +85,26 @@ def input_validator(input_str, type):
     return input_value
 
 def validate_city(city):
-    cities = ['chicago', 'new york city', 'washington']
-    return True if city.lower() in cities else False
+    for key, value in CITY_DATA.items():
+        if key == city.lower():
+            return True
+    return False
 
 def validate_filter_choice(filter_choice):
     filter_options = ['month', 'day', 'none']
     return True if filter_choice.lower() in filter_options else False
 
 def validate_month(month):
-    month_options = ['january', 'february', 'march', 'april', 'may', 'june']
-    return True if month.lower() in month_options else False
+    for key, value in MONTHS.items():
+        if key == month.lower():
+            return True
+    return False
 
 def validate_day(day):
-    day_options = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-    return True if day.lower() in day_options else False
+    for key, value in DAYS.items():
+        if key == day.lower():
+            return True
+    return False
 
 def validate_yes_no_answer(answer):
     answer_options = ['yes', 'no']
@@ -235,6 +247,9 @@ def user_stats(df):
 
 
 def print_raw_data(df):
+    """
+    Asks the user whether s/he wants to see raw data. If yes, the script will print 5 rows each time the user types yes.
+    """
     raw_data_answer = input_validator("\nWould you like to view raw data? Type yes or no. \n", "answer")
     if raw_data_answer.lower() != "yes":
         return df
